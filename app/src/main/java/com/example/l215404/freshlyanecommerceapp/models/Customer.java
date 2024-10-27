@@ -1,27 +1,27 @@
 package com.example.l215404.freshlyanecommerceapp.models;
 
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "vendors")
-public class Vendor {
+@Entity(tableName = "customer")
+public class Customer {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String username;
     private String email;
     private String password;
-    private String ProfilePicture;
-    private String Address;
-    private String phone;
+    private String profilePicture;
+    private String Gender;
 
-    public Vendor(int id, String username, String email, String password, String profilePicture, String address, String phone) {
+    public Customer(int id, String username, String email, String password, String profilePicture, String gender) {
         this.id = id;
         this.username = username;
+        this.email = email;
         this.password = password;
-        ProfilePicture = profilePicture;
-        Address = address;
-        this.phone = phone;
+        this.profilePicture = profilePicture;
+        Gender = gender;
     }
 
     public int getId() {
@@ -40,7 +40,7 @@ public class Vendor {
         this.username = username;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
@@ -57,26 +57,18 @@ public class Vendor {
     }
 
     public String getProfilePicture() {
-        return ProfilePicture;
+        return profilePicture;
     }
 
     public void setProfilePicture(String profilePicture) {
-        ProfilePicture = profilePicture;
+        this.profilePicture = profilePicture;
     }
 
-    public String getAddress() {
-        return Address;
+    public String getGender() {
+        return Gender;
     }
 
-    public void setAddress(String address) {
-        Address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setGender(String gender) {
+        Gender = gender;
     }
 }
