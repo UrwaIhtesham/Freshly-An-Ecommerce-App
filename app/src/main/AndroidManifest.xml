@@ -13,6 +13,9 @@
         android:theme="@style/Theme.FreshlyAnEcommerceApp"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.Profiles.ProfileActivityForCustomer"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Login.LoginActivity"
             android:exported="false" />
         <activity
