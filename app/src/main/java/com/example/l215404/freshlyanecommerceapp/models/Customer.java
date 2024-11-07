@@ -13,7 +13,7 @@ public class Customer {
     private String email;
     private String password;
     private String profilePicture;
-    private String Gender;
+    private String gender;
 
     public Customer(int id, String username, String email, String password, String profilePicture, String gender) {
         this.id = id;
@@ -21,7 +21,7 @@ public class Customer {
         this.email = email;
         this.password = password;
         this.profilePicture = profilePicture;
-        Gender = gender;
+        this.gender = gender;
     }
 
     public int getId() {
@@ -65,10 +65,10 @@ public class Customer {
     }
 
     public String getGender() {
-        return Gender;
+        return gender;
     }
 
     public void setGender(String gender) {
-        Gender = gender;
+        gender = gender;
     }
 }
