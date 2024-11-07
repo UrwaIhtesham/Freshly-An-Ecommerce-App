@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
                  childColumns = "vendor_id",
                  onDelete = ForeignKey.CASCADE),
          @ForeignKey(entity = Category.class,
-                 parentColumns = "c_id",
+                 parentColumns = "cid",
                  childColumns = "category_id",
                  onDelete = ForeignKey.CASCADE)
  })
