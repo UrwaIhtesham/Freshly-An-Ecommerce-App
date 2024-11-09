@@ -14,14 +14,15 @@ public class Customer {
     private String password;
     private String profilePicture;
     private String gender;
+    private boolean isCustomer;
 
-    public Customer(int id, String username, String email, String password, String profilePicture, String gender) {
-        this.id = id;
+    public Customer(String username, String email, String password, String profilePicture, String gender, boolean isCustomer) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.profilePicture = profilePicture;
         this.gender = gender;
+        this.isCustomer = isCustomer;
     }
 
     public int getId() {
@@ -70,5 +71,13 @@ public class Customer {
 
     public void setGender(String gender) {
         gender = gender;
+    }
+
+    public boolean getIsCustomer() {
+        return isCustomer;
+    }
+
+    public void setIsCustomer(boolean isCustomer) {
+        isCustomer = isCustomer;
     }
 }

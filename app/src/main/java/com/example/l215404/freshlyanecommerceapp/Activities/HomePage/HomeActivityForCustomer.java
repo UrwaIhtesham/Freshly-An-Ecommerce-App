@@ -100,24 +100,24 @@ public class HomeActivityForCustomer extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.menu_profile:
-
-                        break;
-                    case R.id.menu_home:
-
-                        break;
-                    case R.id.menu_cart:
-
-                        break;
-                    case R.id.menu_history:
-
-                        break;
-                    case R.id.menu_settings:
-
-                        break;
-                }
-                drawerLayout.closeDrawers();
+//                switch (item.getItemId()){
+//                    case R.id.menu_profile:
+//
+//                        break;
+//                    case R.id.menu_home:
+//
+//                        break;
+//                    case R.id.menu_cart:
+//
+//                        break;
+//                    case R.id.menu_history:
+//
+//                        break;
+//                    case R.id.menu_settings:
+//
+//                        break;
+//                }
+//                drawerLayout.closeDrawers();
                 return true;
             }
         });

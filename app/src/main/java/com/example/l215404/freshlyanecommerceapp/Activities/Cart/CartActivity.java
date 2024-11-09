@@ -26,18 +26,18 @@ public class CartActivity extends AppCompatActivity {
 
         cartItemsContainer = findViewById(R.id.cartoption);
 
-        List<CartItem> cartItems = getCartItems();
-
-        for (CartItem item: cartItems){
-            addCartItemToLayout(item);
-        }
+//        List<CartItem> cartItems = getCartItems();
+//
+//        for (CartItem item: cartItems){
+//            addCartItemToLayout(item);
+//        }
     }
 
-    private List<CartItem> getCartItems() {
-        List<CartItem> items = new ArrayList<>();
-
-        return items;
-    }
+//    private List<CartItem> getCartItems() {
+//        List<CartItem> items = new ArrayList<>();
+//
+//        return items;
+//    }
 
     private void addCartItemToLayout(CartItem item) {
         LinearLayout cartItemLayout = new LinearLayout(this);
