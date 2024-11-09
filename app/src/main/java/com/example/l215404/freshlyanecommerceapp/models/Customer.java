@@ -1,10 +1,11 @@
 package com.example.l215404.freshlyanecommerceapp.models;
 
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "vendors")
-public class Vendor {
+@Entity(tableName = "customer")
+public class Customer {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -12,17 +13,15 @@ public class Vendor {
     private String email;
     private String password;
     private String profilePicture;
-    private String address;
-    private String phone;
+    private String gender;
 
-    public Vendor(int id, String username, String email, String password, String profilePicture, String address, String phone) {
+    public Customer(int id, String username, String email, String password, String profilePicture, String gender) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.profilePicture = profilePicture;
-        this.address = address;
-        this.phone = phone;
+        this.gender = gender;
     }
 
     public int getId() {
@@ -41,7 +40,7 @@ public class Vendor {
         this.username = username;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
@@ -62,22 +61,14 @@ public class Vendor {
     }
 
     public void setProfilePicture(String profilePicture) {
-        profilePicture = profilePicture;
+        this.profilePicture = profilePicture;
     }
 
-    public String getAddress() {
-        return address;
+    public String getGender() {
+        return gender;
     }
 
-    public void setAddress(String address) {
-        address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setGender(String gender) {
+        gender = gender;
     }
 }
