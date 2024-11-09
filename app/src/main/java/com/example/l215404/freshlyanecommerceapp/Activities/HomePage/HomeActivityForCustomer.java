@@ -1,6 +1,18 @@
 package com.example.l215404.freshlyanecommerceapp.Activities.HomePage;
 
+import android.database.CursorWindowAllocationException;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.RenderEffect;
 import android.os.Bundle;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -13,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.l215404.freshlyanecommerceapp.R;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -46,12 +59,15 @@ public class HomeActivityForCustomer extends AppCompatActivity {
                 switch(position) {
                     case 0:
                         tab.setIcon(R.drawable.cart);
+                        tab.setContentDescription("Cart Tab");
                         break;
                     case 1:
                         tab.setIcon(R.drawable.home);
+                        tab.setContentDescription("Home Tab");
                         break;
                     case 2:
                         tab.setIcon(R.drawable.ic_launcher_background);
+                        tab.setContentDescription("Profile");
                         break;
                 }
             }
@@ -65,5 +81,70 @@ public class HomeActivityForCustomer extends AppCompatActivity {
 
         productAdapter = new ProductAdapter(productList, this);
         recyclerView.setAdapter(productAdapter);
+
+        ImageView blurOverlay = findViewById(R.id.blurOverlay);
+        blurOverlay.setOnClickListener(v -> {
+            blurOverlay.setVisibility(View.GONE);
+            findViewById(R.id.navigationDrawer).setVisibility(View.GONE);
+        });
+
+        ImageView hamburger = findViewById(R.id.hamburger);
+        hamburger.setOnClickListener(v -> {
+            applyBlur();
+
+            findViewById(R.id.blurOverlay).setVisibility(View.VISIBLE);
+            findViewById(R.id.navigationDrawer).setVisibility(View.VISIBLE);
+        });
+
+        NavigationView navigationView = findViewById(R.id.navigationDrawer);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.menu_profile:
+
+                        break;
+                    case R.id.menu_home:
+
+                        break;
+                    case R.id.menu_cart:
+
+                        break;
+                    case R.id.menu_history:
+
+                        break;
+                    case R.id.menu_settings:
+
+                        break;
+                }
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
+    }
+
+    private void applyBlur() {
+        View rootView = findViewById(R.id.main);
+        Bitmap screenshot = Bitmap.createBitmap(rootView.getWidth(), rootView.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(screenshot);
+        rootView.draw(canvas);
+
+        RenderScript rs = RenderScript.create(this);
+        Allocation input = Allocation.createFromBitmap(rs, screenshot);
+        Allocation output = Allocation.createTyped(rs, input.getType());
+        ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+        blurScript.setRadius(10f);
+        blurScript.setInput(input);
+        blurScript.forEach(output);
+        output.copyTo(screenshot);
+
+        ImageView blurOverlay = findViewById(R.id.blurOverlay);
+        blurOverlay.setImageBitmap(screenshot);
+        blurOverlay.setVisibility(View.VISIBLE);
+
+        input.destroy();
+        output.destroy();
+        blurScript.destroy();
+        rs.destroy();
     }
 }

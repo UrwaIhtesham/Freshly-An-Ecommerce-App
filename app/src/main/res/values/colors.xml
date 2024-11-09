@@ -11,4 +11,5 @@
     <color name="background">#627291</color>
     <color name="blue">#172885</color>
     <color name="purple">#604D7B</color>
+    <color name="blurBackground">#80000000</color>
 </resources>
