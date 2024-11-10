@@ -61,7 +61,7 @@ public class Vendor {
     }
 
     public void setProfilePicture(String profilePicture) {
-        profilePicture = profilePicture;
+        this.profilePicture = profilePicture;
     }
 
     public String getAddress() {
@@ -69,7 +69,7 @@ public class Vendor {
     }
 
     public void setAddress(String address) {
-        address = address;
+        this.address = address;
     }
 
     public String getPhone() {

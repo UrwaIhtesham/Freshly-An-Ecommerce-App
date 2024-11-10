@@ -23,7 +23,7 @@ public interface VendorDao {
     @Insert
     void insertVendor(Vendor vendor);
 
-    @Query("SELECT * FROM vendors WHERE email = :email AND passsword = :password")
+    @Query("SELECT * FROM vendors WHERE email = :email AND password = :password")
     Vendor login(String email, String password);
 
     @Query("SELECT * FROM vendors WHERE email=:email")

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.FreshlyAnEcommerceApp"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.HomePage.HomeActivityForVendor"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Profiles.ProfileActivityForVendor"
             android:exported="false" />
         <activity

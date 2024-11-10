@@ -105,7 +105,9 @@ public class LoginActivity extends AppCompatActivity {
                 return true;
             }
             Vendor vendor = vendorDao.findVendorByEmail(email);
+            Toast.makeText(LoginActivity.this, "Bye", Toast.LENGTH_SHORT).show();
             if (vendor != null && vendor.getPassword().equals(password)) {
+                Toast.makeText(LoginActivity.this, "Hello", Toast.LENGTH_SHORT).show();
                 isCustomer= false;
                 return true;
             }
@@ -122,8 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(i);
                 } else {
                     Toast.makeText(LoginActivity.this, "Vendor Login Successful", Toast.LENGTH_SHORT).show();
-//                    Intent i = new Intent(LoginActivity.this, HomeActivityForVendor.class);
-//                    startActivity(i);
+                    Intent i = new Intent(LoginActivity.this, HomeActivityForVendor.class);
+                    startActivity(i);
                 }
             } else {
                 Toast.makeText(LoginActivity.this, "Login Failed. Please check your credentials.", Toast.LENGTH_SHORT).show();

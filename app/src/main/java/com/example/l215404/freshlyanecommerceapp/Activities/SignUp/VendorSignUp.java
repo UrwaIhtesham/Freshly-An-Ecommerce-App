@@ -185,11 +185,11 @@ public class VendorSignUp extends AppCompatActivity {
         }
 
         @Override
-        protected void OnPostExecute(String result) {
+        protected void onPostExecute(String result) {
             Toast.makeText(VendorSignUp.this, result, Toast.LENGTH_SHORT).show();
             if(result.equals("Account created successfully!")) {
-                Intent i = new Intent(VendorSignUp.this, HomeActivityForVendor.class);
-                startActivity(i);
+//                Intent i = new Intent(VendorSignUp.this, HomeActivityForVendor.class);
+//                startActivity(i);
                 finish();
             }
         }
