@@ -177,7 +177,7 @@ public class VendorSignUp extends AppCompatActivity {
             Vendor vendor = vendors[0];
             Vendor existingVendor = freshlyDatabase.vendorDao().checkIfEmailExists(vendor.getEmail());
             if(existingVendor != null) {
-                return "Email already registeres for vendor";
+                return "Email already registered for vendor";
             } else {
                 freshlyDatabase.vendorDao().insertVendor(vendor);
                 return "Account created successfully!";
