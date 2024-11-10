@@ -6,7 +6,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -87,6 +89,9 @@ public class CustomerSignUp extends AppCompatActivity {
             }
         });
 
+        signUpButton.setEnabled(false);
+        signUpButton.setAlpha(0.5f);
+
         profileImagePlaceholder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +107,23 @@ public class CustomerSignUp extends AppCompatActivity {
         });
 
     }
+
+    private final TextWatcher signUpTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // Check if all required fields are filled
+            signUpButton.setEnabled(!TextUtils.isEmpty(usernameEditText.getText())
+                    && !TextUtils.isEmpty(emailEditText.getText())
+                    && !TextUtils.isEmpty(passwordEditText.getText()));
+            signUpButton.setAlpha(1.0f);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) { }
+    };
 
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK);

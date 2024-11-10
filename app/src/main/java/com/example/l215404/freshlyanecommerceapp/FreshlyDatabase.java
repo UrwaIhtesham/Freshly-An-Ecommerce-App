@@ -13,7 +13,7 @@ import com.example.l215404.freshlyanecommerceapp.models.Customer;
 import com.example.l215404.freshlyanecommerceapp.models.Product;
 import com.example.l215404.freshlyanecommerceapp.models.Vendor;
 
-@Database(entities = {Vendor.class, Customer.class, Product.class, Category.class}, version = 2)
+@Database(entities = {Vendor.class, Customer.class, Product.class, Category.class}, version = 3)
 public abstract class FreshlyDatabase extends RoomDatabase {
     public abstract VendorDao vendorDao();
     public abstract CustomerDao customerDao();

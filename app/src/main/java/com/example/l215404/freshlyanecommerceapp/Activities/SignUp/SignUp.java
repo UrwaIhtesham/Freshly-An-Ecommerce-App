@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.l215404.freshlyanecommerceapp.Activities.Login.LoginActivity;
 import com.example.l215404.freshlyanecommerceapp.R;
 
 public class SignUp extends AppCompatActivity {
@@ -19,6 +22,7 @@ public class SignUp extends AppCompatActivity {
     private LinearLayout customerLayout;
     private LinearLayout vendorLayout;
     private Button confirm;
+    private TextView loginText;
 
     private boolean isCustomerSelected = false;
 
@@ -31,6 +35,7 @@ public class SignUp extends AppCompatActivity {
         customerLayout = findViewById(R.id.customerLayout);
         vendorLayout = findViewById(R.id.vendorLayout);
         confirm = findViewById(R.id.confirmButton);
+        loginText = findViewById(R.id.loginText);
 
         confirm.setEnabled(false);
         confirm.setAlpha(0.5f);
@@ -70,6 +75,14 @@ public class SignUp extends AppCompatActivity {
                     Intent intent = new Intent(SignUp.this, VendorSignUp.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        loginText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(SignUp.this, LoginActivity.class);
+                startActivity(i);
             }
         });
     }

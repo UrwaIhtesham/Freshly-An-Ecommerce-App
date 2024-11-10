@@ -15,8 +15,7 @@ public class Vendor {
     private String address;
     private String phone;
 
-    public Vendor(int id, String username, String email, String password, String profilePicture, String address, String phone) {
-        this.id = id;
+    public Vendor(String username, String email, String password, String profilePicture, String address, String phone) {
         this.username = username;
         this.email = email;
         this.password = password;
