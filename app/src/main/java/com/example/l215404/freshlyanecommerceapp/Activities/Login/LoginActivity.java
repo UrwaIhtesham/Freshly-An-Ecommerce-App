@@ -1,5 +1,6 @@
 package com.example.l215404.freshlyanecommerceapp.Activities.Login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.l215404.freshlyanecommerceapp.Activities.HomePage.HomeActivityForCustomer;
+import com.example.l215404.freshlyanecommerceapp.Activities.SessionManager.SessionManager;
 import com.example.l215404.freshlyanecommerceapp.FreshlyDatabase;
 import com.example.l215404.freshlyanecommerceapp.R;
 import com.example.l215404.freshlyanecommerceapp.dao.VendorDao;
@@ -35,6 +37,16 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
+        SessionManager sessionManager = new SessionManager(this);
+        if (sessionManager.isLoggedIn()) {
+            if (sessionManager.isCustomer()) {
+                startActivity(new Intent(this, HomeActivityForCustomer.class));
+            } else {
+                startActivity(new Intent(this, HomeActivitiyForVendor.class));
+            }
+            finish();
+        }
+
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
@@ -45,16 +57,20 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-            new loginTask(email, password).execute();
+            new LoginTask(email, password, this).execute();
         });
     }
+
     private class LoginTask extends AsyncTask<Void, Void, Boolean> {
         private String email, password;
         private boolean isCustomer;
+        private int userId;
+        private SessionManager sessionManager;
 
-        public LoginTask(String email, String password) {
+        public LoginTask(String email, String password, Context context) {
             this.email = email;
             this.password = password;
+            this.sessionManager = new SessionManager(context);
         }
 
         @Override

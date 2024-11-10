@@ -37,7 +37,7 @@ public class SessionManager {
     public String getEmail() {
         return sharedPreferences.getString(KEY_EMAIL, null);
     }
-    
+
     public boolean isCustomer() {
         return sharedPreferences.getBoolean(KEY_IS_CUSTOMER, true);
     }
