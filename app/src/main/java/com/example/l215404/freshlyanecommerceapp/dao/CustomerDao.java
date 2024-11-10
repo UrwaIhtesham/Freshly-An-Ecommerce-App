@@ -16,4 +16,7 @@ public interface CustomerDao {
 
     @Query("SELECT * FROM customer WHERE email= :email")
     Customer checkIFEmailExists(String email);
+
+    @Query("SELECT * FROM customer WHERE email = :email")
+    Customer findCustomerByEmail(String email);
 }

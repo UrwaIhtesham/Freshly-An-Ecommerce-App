@@ -16,4 +16,7 @@ public interface VendorDao {
 
     @Query("SELECT * FROM vendors WHERE id=:id")
     Vendor getVendorById(int id);
+
+    @Query("SELECT * FROM vendors WHERE email = :email")
+    Vendor findVendorByEmail(String email);
 }
