@@ -16,6 +16,12 @@
         android:theme="@style/Theme.FreshlyAnEcommerceApp"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.History.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Settings.SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.HomePage.HomeActivityForVendor"
             android:exported="false" />
         <activity
