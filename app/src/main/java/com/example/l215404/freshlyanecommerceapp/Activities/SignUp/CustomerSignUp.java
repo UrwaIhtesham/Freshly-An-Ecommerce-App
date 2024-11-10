@@ -92,6 +92,10 @@ public class CustomerSignUp extends AppCompatActivity {
         signUpButton.setEnabled(false);
         signUpButton.setAlpha(0.5f);
 
+        usernameEditText.addTextChangedListener(signUpTextWatcher);
+        emailEditText.addTextChangedListener(signUpTextWatcher);
+        passwordEditText.addTextChangedListener(signUpTextWatcher);
+
         profileImagePlaceholder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

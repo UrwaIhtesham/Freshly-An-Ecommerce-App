@@ -1,5 +1,6 @@
 package com.example.l215404.freshlyanecommerceapp.Activities.HomePage;
 
+import android.content.Intent;
 import android.database.CursorWindowAllocationException;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,10 +21,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.l215404.freshlyanecommerceapp.Activities.Cart.CartActivity;
+import com.example.l215404.freshlyanecommerceapp.Activities.Login.LoginActivity;
+import com.example.l215404.freshlyanecommerceapp.Activities.Profiles.ProfileActivityForCustomer;
+import com.example.l215404.freshlyanecommerceapp.Activities.SessionManager.SessionManager;
 import com.example.l215404.freshlyanecommerceapp.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -38,11 +44,16 @@ public class HomeActivityForCustomer extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_for_customer);
+
+        drawerLayout = findViewById(R.id.main);
+        navigationView = findViewById(R.id.navigationDrawer);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewpager);
@@ -96,28 +107,32 @@ public class HomeActivityForCustomer extends AppCompatActivity {
             findViewById(R.id.navigationDrawer).setVisibility(View.VISIBLE);
         });
 
-        NavigationView navigationView = findViewById(R.id.navigationDrawer);
+        SessionManager sessionManager = new SessionManager(this);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()){
-//                    case R.id.menu_profile:
-//
-//                        break;
-//                    case R.id.menu_home:
-//
-//                        break;
-//                    case R.id.menu_cart:
-//
-//                        break;
-//                    case R.id.menu_history:
-//
-//                        break;
-//                    case R.id.menu_settings:
-//
-//                        break;
-//                }
-//                drawerLayout.closeDrawers();
+                switch (item.getItemId()){
+                    case R.id.menu_profile:
+                        startActivity(new Intent(HomeActivityForCustomer.this, ProfileActivityForCustomer.class));
+                        break;
+                    case R.id.menu_home:
+                        break;
+                    case R.id.menu_cart:
+                        startActivity(new Intent(HomeActivityForCustomer.this, CartActivity.class));
+                        break;
+                    case R.id.menu_history:
+                        startActivity(new Intent(HomeActivityForCustomer.this, HistoryActivity.class));
+                        break;
+                    case R.id.menu_settings:
+                        startActivity(new Intent(HomeActivityForCustomer.this, SettingsActivity.class));
+                        break;
+                    case R.id.logout:
+                        sessionManager.logout();
+                        startActivity(new Intent(HomeActivityForCustomer.this, LoginActivity.class));
+                        finish();
+                }
+                drawerLayout.closeDrawers();
                 return true;
             }
         });

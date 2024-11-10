@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.l215404.freshlyanecommerceapp.Activities.HomePage.HomeActivityForCustomer;
+import com.example.l215404.freshlyanecommerceapp.Activities.HomePage.HomeActivityForVendor;
 import com.example.l215404.freshlyanecommerceapp.Activities.SessionManager.SessionManager;
 import com.example.l215404.freshlyanecommerceapp.FreshlyDatabase;
 import com.example.l215404.freshlyanecommerceapp.R;
@@ -105,9 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 return true;
             }
             Vendor vendor = vendorDao.findVendorByEmail(email);
-            Toast.makeText(LoginActivity.this, "Bye", Toast.LENGTH_SHORT).show();
             if (vendor != null && vendor.getPassword().equals(password)) {
-                Toast.makeText(LoginActivity.this, "Hello", Toast.LENGTH_SHORT).show();
                 isCustomer= false;
                 return true;
             }
