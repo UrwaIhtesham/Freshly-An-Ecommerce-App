@@ -7,11 +7,12 @@
     android:background="@color/background"
     tools:context=".Activities.HomePage.ProfileFragment">
 
-    <TextView
+    <ImageView
         android:id="@+id/profileText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:text="Profile"
+        android:src="@drawable/ic_launcher_background"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

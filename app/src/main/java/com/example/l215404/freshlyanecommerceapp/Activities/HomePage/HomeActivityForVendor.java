@@ -28,6 +28,7 @@ import com.example.l215404.freshlyanecommerceapp.Activities.Login.LoginActivity;
 import com.example.l215404.freshlyanecommerceapp.Activities.Profiles.ProfileActivityForCustomer;
 import com.example.l215404.freshlyanecommerceapp.Activities.Profiles.ProfileActivityForVendor;
 import com.example.l215404.freshlyanecommerceapp.Activities.SessionManager.SessionManager;
+import com.example.l215404.freshlyanecommerceapp.Activities.Settings.SettingsActivity;
 import com.example.l215404.freshlyanecommerceapp.Activities.UploadProduct.UploadProductActivity;
 import com.example.l215404.freshlyanecommerceapp.R;
 import com.google.android.material.navigation.NavigationView;
@@ -103,22 +104,20 @@ public class HomeActivityForVendor extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.menu_profile:
-                        startActivity(new Intent(HomeActivityForVendor.this, ProfileActivityForVendor.class));
-                        break;
-                    case R.id.menu_home:
-                        break;
-                    case R.id.menu_upload:
-                        startActivity(new Intent(HomeActivityForVendor.this, UploadProductActivity.class));
-                        break;
-                    case R.id.menu_settings:
-                        startActivity(new Intent(HomeActivityForVendor.this, SettingsActivity.class));
-                        break;
-                    case R.id.logout:
-                        sessionManager.logout();
-                        startActivity(new Intent(HomeActivityForVendor.this, LoginActivity.class));
-                        finish();
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.menu_profile) {
+                    startActivity(new Intent(HomeActivityForVendor.this, ProfileActivityForCustomer.class));
+                } else if (itemId == R.id.menu_home) {
+                    // Do nothing or add specific action if needed for the home button
+                } else if (itemId == R.id.menu_upload) {
+                    startActivity(new Intent(HomeActivityForVendor.this, UploadProductActivity.class));
+                } else if (itemId == R.id.menu_settings) {
+                    startActivity(new Intent(HomeActivityForVendor.this, SettingsActivity.class));
+                } else if (itemId == R.id.logout) {
+                    sessionManager.logout();
+                    startActivity(new Intent(HomeActivityForVendor.this, LoginActivity.class));
+                    finish();
                 }
                 drawerLayout.closeDrawers();
                 return true;

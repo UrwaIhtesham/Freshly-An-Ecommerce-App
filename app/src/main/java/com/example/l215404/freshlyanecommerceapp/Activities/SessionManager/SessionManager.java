@@ -22,7 +22,6 @@ public class SessionManager {
         editor.putInt(KEY_USER_ID, userId);
         editor.putString(KEY_EMAIL, email);
         editor.putBoolean(KEY_IS_CUSTOMER, isCustomer);
-        editor.commit();
         editor.apply();
     }
 

@@ -28,4 +28,9 @@ public interface VendorDao {
 
     @Query("SELECT * FROM vendors WHERE email=:email")
     Vendor checkIfEmailExists(String email);
+
+    @Query("SELECT * FROM vendors LIMIT 1")
+    Vendor getFirstVendor();
+
+
 }

@@ -19,4 +19,7 @@ public interface CustomerDao {
 
     @Query("SELECT * FROM customer WHERE email = :email")
     Customer findCustomerByEmail(String email);
+
+    @Query("SELECT * FROM customer WHERE id= :id")
+    Customer findCustomerById(int id);
 }

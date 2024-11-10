@@ -25,6 +25,7 @@ import com.example.l215404.freshlyanecommerceapp.dao.VendorDao;
 import com.example.l215404.freshlyanecommerceapp.dao.CustomerDao;
 import com.example.l215404.freshlyanecommerceapp.models.Customer;
 import com.example.l215404.freshlyanecommerceapp.models.Vendor;
+import com.example.l215404.freshlyanecommerceapp.Activities.HomePage.HomeActivityForVendor;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private FreshlyDatabase freshlyDatabase;
     private CustomerDao customerDao;
     private VendorDao vendorDao;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +42,14 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        SessionManager sessionManager = new SessionManager(this);
+        freshlyDatabase = FreshlyDatabase.getInstance(this);
+        sessionManager = new SessionManager(this);
+
         if (sessionManager.isLoggedIn()) {
             if (sessionManager.isCustomer()) {
                 startActivity(new Intent(this, HomeActivityForCustomer.class));
             } else {
-//                startActivity(new Intent(this, HomeActivitiyForVendor.class));
+                startActivity(new Intent(this, HomeActivityForVendor.class));
             }
             finish();
         }
@@ -82,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-            new LoginTask(email, password, this).execute();
+            new LoginTask(email, password, sessionManager).execute();
         });
     }
 
@@ -91,11 +95,12 @@ public class LoginActivity extends AppCompatActivity {
         private boolean isCustomer;
         private int userId;
         private SessionManager sessionManager;
+        private String profileImageUrl;
 
-        public LoginTask(String email, String password, Context context) {
+        public LoginTask(String email, String password, SessionManager sessionManager) {
             this.email = email;
             this.password = password;
-            this.sessionManager = new SessionManager(context);
+            this.sessionManager = sessionManager;
         }
 
         @Override
@@ -103,11 +108,13 @@ public class LoginActivity extends AppCompatActivity {
             Customer customer = customerDao.findCustomerByEmail(email);
             if (customer != null && customer.getPassword().equals(password)) {
                 isCustomer = customer.getIsCustomer();
+                userId= customer.getId();
                 return true;
             }
             Vendor vendor = vendorDao.findVendorByEmail(email);
             if (vendor != null && vendor.getPassword().equals(password)) {
                 isCustomer= false;
+                userId = vendor.getId();
                 return true;
             }
 
@@ -117,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             if (success) {
+                sessionManager.createSession(userId, email,isCustomer);
                 if (isCustomer) {
                     Toast.makeText(LoginActivity.this, "Customer Login Successful", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(LoginActivity.this, HomeActivityForCustomer.class);
