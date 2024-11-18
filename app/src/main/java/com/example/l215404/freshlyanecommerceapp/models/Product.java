@@ -26,8 +26,7 @@ public class Product {
     private int category_id;
     private int vendor_id;
 
-    public Product(int id, String title, String description, String image, int price, int category_id, int vendor_id) {
-        this.id = id;
+    public Product(String title, String description, String image, int price, int category_id, int vendor_id) {
         this.title = title;
         this.description = description;
         this.image = image;

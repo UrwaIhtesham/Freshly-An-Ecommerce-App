@@ -23,6 +23,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.loader.content.AsyncTaskLoader;
 
+import com.example.l215404.freshlyanecommerceapp.Activities.HomePage.HomeActivityForVendor;
+import com.example.l215404.freshlyanecommerceapp.Activities.SessionManager.SessionManager;
 import com.example.l215404.freshlyanecommerceapp.FreshlyDatabase;
 import com.example.l215404.freshlyanecommerceapp.R;
 import com.example.l215404.freshlyanecommerceapp.models.Vendor;
@@ -40,11 +42,17 @@ public class VendorSignUp extends AppCompatActivity {
     private String selectedImagePath = null;
     private Button signUpButton;
 
+    private SessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_vendor_sign_up);
+
+        sessionManager = new SessionManager(this);
+
+        sessionManager.logout();
 
         usernameEditText = findViewById(R.id.usernameEditText);
         emailEditText = findViewById(R.id.emailEditText);
@@ -188,8 +196,14 @@ public class VendorSignUp extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Toast.makeText(VendorSignUp.this, result, Toast.LENGTH_SHORT).show();
             if(result.equals("Account created successfully!")) {
-//                Intent i = new Intent(VendorSignUp.this, HomeActivityForVendor.class);
-//                startActivity(i);
+                SessionManager sessionManager = new SessionManager(VendorSignUp.this);
+                Vendor vendor = freshlyDatabase.vendorDao().findVendorByEmail(emailEditText.getText().toString());
+
+                if (vendor != null) {
+                    sessionManager.createSession(vendor.getId(), vendor.getUsername(), false);
+                }
+                Intent i = new Intent(VendorSignUp.this, HomeActivityForVendor.class);
+                startActivity(i);
                 finish();
             }
         }

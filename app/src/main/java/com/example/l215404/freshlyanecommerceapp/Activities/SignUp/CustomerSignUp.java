@@ -27,6 +27,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.l215404.freshlyanecommerceapp.Activities.HomePage.HomeActivityForCustomer;
+import com.example.l215404.freshlyanecommerceapp.Activities.SessionManager.SessionManager;
 import com.example.l215404.freshlyanecommerceapp.FreshlyDatabase;
 import com.example.l215404.freshlyanecommerceapp.R;
 import com.example.l215404.freshlyanecommerceapp.models.Customer;
@@ -230,6 +231,12 @@ public class CustomerSignUp extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Toast.makeText(CustomerSignUp.this, result, Toast.LENGTH_SHORT).show();
             if (result.equals("Account created successfully!")) {
+                SessionManager sessionManager = new SessionManager(CustomerSignUp.this);
+                Customer customer =database.customerDao().findCustomerByEmail(emailEditText.getText().toString());
+
+                if (customer != null) {
+                    sessionManager.createSession(customer.getId(), customer.getUsername(), true);
+                }
                 Intent i = new Intent(CustomerSignUp.this, HomeActivityForCustomer.class);
                 startActivity(i);
                 finish();

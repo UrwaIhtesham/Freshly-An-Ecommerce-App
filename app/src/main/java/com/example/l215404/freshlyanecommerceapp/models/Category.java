@@ -10,8 +10,7 @@ public class Category {
 
     private String name;
 
-    public Category(int cid, String name) {
-        this.cid = cid;
+    public Category(String name) {
         this.name = name;
     }
 

@@ -29,6 +29,7 @@
             android:exported="false" />
         <activity
             android:name=".Activities.UploadProduct.UploadProductActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".Activities.Cart.OrderConfirmationActivity"
@@ -47,12 +48,15 @@
             android:exported="false" />
         <activity
             android:name=".Activities.Login.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".Activities.SignUp.VendorSignUp"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".Activities.SignUp.CustomerSignUp"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".Activities.SignUp.SignUp"

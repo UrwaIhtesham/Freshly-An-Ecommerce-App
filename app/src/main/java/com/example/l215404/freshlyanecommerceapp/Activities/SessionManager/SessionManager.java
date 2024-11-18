@@ -45,4 +45,9 @@ public class SessionManager {
         editor.clear();
         editor.apply();
     }
+
+    public void clearSession() {
+        editor.clear();
+        editor.apply();
+    }
 }

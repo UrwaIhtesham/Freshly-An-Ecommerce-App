@@ -16,6 +16,7 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -93,6 +94,8 @@ public class HomeActivityForCustomer extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
 
+        viewPager.setCurrentItem(1, false);
+
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -164,6 +167,46 @@ public class HomeActivityForCustomer extends AppCompatActivity {
                 return true;
             }
         });
+
+        if (sessionManager.isLoggedIn() && sessionManager.isCustomer()) {
+            int userId = sessionManager.getUserId();
+            Log.d("USER", "userdi: "+ userId);
+            new FetchUsernameTask(userId).execute(); // Start AsyncTask to fetch username
+        } else {
+            greetingText.setText("Hi, Guest");
+        }
+    }
+
+    private class FetchUsernameTask extends AsyncTask<Void, Void, String> {
+        private int userId;
+
+        public FetchUsernameTask(int userID) {
+            this.userId = userID;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String username = null;
+            try {
+                Log.d("UserId", "userId: "+userId);
+                Customer customer = freshlyDatabase.customerDao().findCustomerById(userId);
+                Log.d("Customer", "Customer: "+customer);
+                username = customer.getUsername();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return username;
+        }
+
+        @Override
+        protected void onPostExecute(String username) {
+            super.onPostExecute(username);
+            if (username != null) {
+                greetingText.setText("Hi, " + username);
+            } else {
+                greetingText.setText("Hi, Guest");
+            }
+        }
     }
 
     private class LoadProfileImageForTabTask extends AsyncTask<Void, Void, Bitmap> {
