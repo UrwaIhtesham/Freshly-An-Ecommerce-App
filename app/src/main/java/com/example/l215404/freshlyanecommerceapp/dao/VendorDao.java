@@ -16,4 +16,21 @@ public interface VendorDao {
 
     @Query("SELECT * FROM vendors WHERE id=:id")
     Vendor getVendorById(int id);
+
+    @Query("SELECT * FROM vendors WHERE email = :email")
+    Vendor findVendorByEmail(String email);
+
+    @Insert
+    void insertVendor(Vendor vendor);
+
+    @Query("SELECT * FROM vendors WHERE email = :email AND password = :password")
+    Vendor login(String email, String password);
+
+    @Query("SELECT * FROM vendors WHERE email=:email")
+    Vendor checkIfEmailExists(String email);
+
+    @Query("SELECT * FROM vendors LIMIT 1")
+    Vendor getFirstVendor();
+
+
 }

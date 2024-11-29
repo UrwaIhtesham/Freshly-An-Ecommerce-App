@@ -15,8 +15,7 @@ public class Vendor {
     private String address;
     private String phone;
 
-    public Vendor(int id, String username, String email, String password, String profilePicture, String address, String phone) {
-        this.id = id;
+    public Vendor(String username, String email, String password, String profilePicture, String address, String phone) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -62,7 +61,7 @@ public class Vendor {
     }
 
     public void setProfilePicture(String profilePicture) {
-        profilePicture = profilePicture;
+        this.profilePicture = profilePicture;
     }
 
     public String getAddress() {
@@ -70,7 +69,7 @@ public class Vendor {
     }
 
     public void setAddress(String address) {
-        address = address;
+        this.address = address;
     }
 
     public String getPhone() {
