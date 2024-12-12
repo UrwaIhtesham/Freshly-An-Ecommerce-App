@@ -50,6 +50,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.example.l215404.freshlyanecommerceapp.dao.CustomerDao;
 
 public class HomeActivityForVendor extends AppCompatActivity {
@@ -68,6 +72,8 @@ public class HomeActivityForVendor extends AppCompatActivity {
     private ImageView hamburgerMenu;
 
     private SessionManager sessionManager;
+
+    private List<Product> productList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +154,12 @@ public class HomeActivityForVendor extends AppCompatActivity {
             }
         });
 
+        if (sessionManager.isLoggedIn() && sessionManager.isCustomer()==false) {
+            int userId = sessionManager.getUserId();
+            new FetchVendorProductsTask(userId).execute();
+        }
+
+        productAdapter = new ProductAdapter(productList, this, "Page2");
         recyclerView.setAdapter(productAdapter);
 
         ImageView blurOverlay = findViewById(R.id.blurOverlay);
@@ -192,6 +204,58 @@ public class HomeActivityForVendor extends AppCompatActivity {
             new HomeActivityForVendor.FetchUsernameTask(userId).execute(); // Start AsyncTask to fetch username
         } else {
             greetingText.setText("Hi, Guest");
+        }
+    }
+
+    private class FetchVendorProductsTask extends AsyncTask<Void, Void, List<Product>> {
+        private int vendorId;
+
+        public FetchVendorProductsTask(int vendorId) {
+            this.vendorId = vendorId;
+        }
+
+        @Override
+        protected List<Product> doInBackground(Void... voids) {
+            List<com.example.l215404.freshlyanecommerceapp.models.Product> dbproducts = freshlyDatabase.productDao().getAllProducts();
+
+            List<Product> productsfinal = new ArrayList<>();
+
+            for (com.example.l215404.freshlyanecommerceapp.models.Product dbproduct : dbproducts) {
+                if (dbproduct.getVendor_id() == vendorId) {
+                    Log.d("Product match", "Product Id: "+ dbproduct.getId());
+                    Log.d("Product match", "Product Title: "+ dbproduct.getTitle());
+                    Log.d("Product match", "Product Description: "+ dbproduct.getDescription());
+                    Log.d("Product match", "Product Vendor id: "+ dbproduct.getVendor_id());
+                    Log.d("Product match", "Product Price: "+ dbproduct.getPrice());
+                    Log.d("Product match", "Product : "+ dbproduct.getImage());
+
+                    Product adapterProduct = new Product(
+                            dbproduct.getId(),
+                            dbproduct.getTitle(),
+                            dbproduct.getDescription(),
+                            dbproduct.getVendor_id(),
+                            dbproduct.getPrice(),
+                            dbproduct.getImage()
+                    );
+
+                    productsfinal.add(adapterProduct);
+
+                }
+            }
+
+            return productsfinal;
+        }
+
+        @Override
+        protected void onPostExecute(List<Product> products) {
+            super.onPostExecute(products);
+            Log.d("Fetched Products", "Fetched Products: " + products.size());
+            if (products.isEmpty()) {
+                Log.d("No Products", "No products to display.");
+            }
+            productList.clear();
+            productList.addAll(products);
+            productAdapter.notifyDataSetChanged();
         }
     }
 

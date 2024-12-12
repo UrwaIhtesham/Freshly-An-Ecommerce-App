@@ -68,6 +68,8 @@ public class HomeActivityForCustomer extends AppCompatActivity {
     private FreshlyDatabase freshlyDatabase;
     private ImageView hamburgerMenu;
 
+    private List<Product> productList = new ArrayList<>();
+
     private SessionManager sessionManager;
 
     @Override
@@ -121,13 +123,11 @@ public class HomeActivityForCustomer extends AppCompatActivity {
             }
         }).attach();
 
-        List<Product> productList = new ArrayList<>();
-        productList.add(new Product("1 kg Fresh Apples", "Fresh Apples imported from Washington", 400, R.drawable.customer));
-        productList.add(new Product("Premium Dry Fruits", "Almonds, pistachios, and hazelnuts", 2500, R.drawable.vendor));
-        productList.add(new Product("1 Kg Fresh Mangoes", "Juicy and sweet mangoes", 400, R.drawable.customer));
-        productList.add(new Product("1 Kg Fresh Potatoes", "Ideal for cooking meals", 350, R.drawable.customer));
+        if (sessionManager.isLoggedIn() && sessionManager.isCustomer()) {
+            new HomeActivityForCustomer.FetchProductsTask().execute();
+        }
 
-        productAdapter = new ProductAdapter(productList, this);
+        productAdapter = new ProductAdapter(productList, this, "Page1");
         recyclerView.setAdapter(productAdapter);
 
         ImageView blurOverlay = findViewById(R.id.blurOverlay);
@@ -174,6 +174,45 @@ public class HomeActivityForCustomer extends AppCompatActivity {
             new FetchUsernameTask(userId).execute(); // Start AsyncTask to fetch username
         } else {
             greetingText.setText("Hi, Guest");
+        }
+    }
+
+    private class FetchProductsTask extends AsyncTask<Void, Void, List<Product>> {
+
+        @Override
+        protected List<Product> doInBackground(Void... voids) {
+            List<com.example.l215404.freshlyanecommerceapp.models.Product> dbproducts = freshlyDatabase.productDao().getAllProducts();
+            Log.d("DBProducts", "Fetched from DB: " + dbproducts.size());
+            List<Product> productsfinal = new ArrayList<>();
+
+            for (com.example.l215404.freshlyanecommerceapp.models.Product dbproduct : dbproducts) {
+                    Product adapterProduct = new Product(
+                            dbproduct.getId(),
+                            dbproduct.getTitle(),
+                            dbproduct.getDescription(),
+                            dbproduct.getVendor_id(),
+                            dbproduct.getPrice(),
+                            dbproduct.getImage()
+                    );
+
+                    productsfinal.add(adapterProduct);
+                    Log.d("shfs", "Product: " + productsfinal);
+            }
+
+            return productsfinal;
+        }
+
+        @Override
+        protected void onPostExecute(List<Product> products) {
+            super.onPostExecute(products);
+            Log.d("Fetched Products", "Fetched Products: " + products.size());
+            if (products.isEmpty()) {
+                Log.d("No Products", "No products to display.");
+            }
+            productList.clear();
+            productList.addAll(products);
+            Log.d("hsfh", "onPostExecute: "+ productList);
+            productAdapter.notifyDataSetChanged();
         }
     }
 

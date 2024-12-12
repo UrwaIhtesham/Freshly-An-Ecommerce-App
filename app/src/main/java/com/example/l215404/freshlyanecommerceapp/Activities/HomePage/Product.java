@@ -1,16 +1,28 @@
 package com.example.l215404.freshlyanecommerceapp.Activities.HomePage;
 
 public class Product {
+    private int id;
     private String name;
     private String description;
+    private int vendorId;
     private int price;
-    private int imageSource;
+    private String imageSource;
 
-    public Product(String name, String description, int price, int imageSource) {
+    public Product(int id, String name, String description, int vendorid, int price, String imageSource) {
+        this.id=id;
         this.name = name;
         this.description = description;
+        this.vendorId = vendorid;
         this.price = price;
         this.imageSource = imageSource;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -29,6 +41,14 @@ public class Product {
         this.description = description;
     }
 
+    public int getVendorId() {
+        return vendorId;
+    }
+
+    public void setVendorId(int vendorId) {
+        this.vendorId = vendorId;
+    }
+
     public int getPrice() {
         return price;
     }
@@ -37,11 +57,11 @@ public class Product {
         this.price = price;
     }
 
-    public int getImageSource() {
+    public String getImageSource() {
         return imageSource;
     }
 
-    public void setImageSource(int imageSource) {
+    public void setImageSource(String imageSource) {
         this.imageSource = imageSource;
     }
 }
